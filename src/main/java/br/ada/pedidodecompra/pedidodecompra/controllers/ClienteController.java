@@ -1,5 +1,6 @@
 package br.ada.pedidodecompra.pedidodecompra.controllers;
 
+import br.ada.pedidodecompra.pedidodecompra.dto.ClienteDTO;
 import br.ada.pedidodecompra.pedidodecompra.entities.Cliente;
 import br.ada.pedidodecompra.pedidodecompra.repositorys.ClienteRepository;
 import jakarta.validation.Valid;
@@ -14,8 +15,9 @@ public class ClienteController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Cliente cadastrar(@RequestBody @Valid Cliente cliente) {
-        return clienteRepository.save(cliente);
+    public ClienteDTO cadastrar(@RequestBody @Valid Cliente cliente) {
+        Cliente clienteSalvo = clienteRepository.save(cliente);
+        return new ClienteDTO(clienteSalvo);
     }
 
     /*

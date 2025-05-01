@@ -37,6 +37,7 @@ public class Cliente {
     private String cpf;
 
     @NotBlank
+    @JsonIgnore
     private String senha;
 
     @JsonIgnore
