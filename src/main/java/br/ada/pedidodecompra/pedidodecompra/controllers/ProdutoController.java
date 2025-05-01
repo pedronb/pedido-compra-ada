@@ -13,5 +13,23 @@ import java.util.List;
 @RequestMapping("/api/produtos")
 public class ProdutoController {
 
+    private ProdutoRepository produtoRepository;
 
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public Produto cadastrarProduto(@RequestBody @Valid Produto produto) {
+        return produtoRepository.save(produto);
+    }
+
+    @GetMapping
+    public List<Produto> listarProdutos() {
+        return produtoRepository.findAll();
+    }
+
+    /*
+    TODO:
+        - Atualizar Produto especifico;
+        - Retornar Produto especifico;
+        - Deletar Produto;
+    */
 }

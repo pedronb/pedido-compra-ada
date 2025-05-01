@@ -17,4 +17,12 @@ public class ClienteController {
     public Cliente cadastrar(@RequestBody @Valid Cliente cliente) {
         return clienteRepository.save(cliente);
     }
+
+    /*
+    TODO:
+        - Retornar lista de Clientes;
+        - Retornar Cliente específico;
+        - Atualizar Cliente;
+        - Deletar Cliente;
+    */
 }
