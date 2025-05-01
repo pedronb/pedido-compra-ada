@@ -2,6 +2,7 @@ package br.ada.pedidodecompra.pedidodecompra.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -34,6 +35,9 @@ public class Cliente {
     @NotEmpty(message = "cpf é obrigatório")
     @CPF(message = "informe um cpf válido")
     private String cpf;
+
+    @NotBlank
+    private String senha;
 
     @JsonIgnore
     @OneToMany(mappedBy = "cliente")

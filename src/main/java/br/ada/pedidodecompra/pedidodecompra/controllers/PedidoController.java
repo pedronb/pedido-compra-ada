@@ -23,10 +23,4 @@ public class PedidoController {
         return pedidoService.listarTodos();
     }
 
-    /*
-    TODO:
-        - Atualizar Pedido;
-        - Deletar Pedido;
-    */
-
 }

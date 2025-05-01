@@ -30,6 +30,5 @@ public class ProdutoController {
     TODO:
         - Atualizar Produto especifico;
         - Retornar Produto especifico;
-        - Deletar Produto;
     */
 }
