@@ -10,10 +10,11 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/clientes")
 public class ClienteController {
 
+    private ClienteRepository clienteRepository;
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Cliente cadastrar(@RequestBody @Valid Cliente cliente) {
-        return cliente;
+        return clienteRepository.save(cliente);
     }
 }
