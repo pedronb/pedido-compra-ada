@@ -15,7 +15,7 @@ public class ClienteService {
 
     public ClienteDTO cadastraCliente(Cliente cliente) {
 
-        if (clienteRepository.findByEmail(cliente.getEmail()) != null) {
+        if (clienteRepository.findById(cliente.getId()) != null) {
             throw new RuntimeException("Cliente ja cadastrado com esse email");
         }
 
@@ -27,8 +27,9 @@ public class ClienteService {
         return clienteRepository.findAll();
     }
 
-    public ClienteDTO encontrarCliente(String clienteEmail) {
-        return clienteRepository.findByEmail(clienteEmail);
+    public Cliente encontrarCliente(Integer id) {
+        return clienteRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Cliente não encontrado."));
     }
 
     public void deletarCliente(Integer clienteId) {

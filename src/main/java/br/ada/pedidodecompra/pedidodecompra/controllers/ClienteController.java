@@ -26,9 +26,9 @@ public class ClienteController {
         return clienteService.listarClientes();
     }
 
-    @GetMapping("/{email}")
-    public ClienteDTO retornarCliente(@PathVariable String clienteEmail) {
-        return clienteService.encontrarCliente(clienteEmail);
+    @GetMapping("/{id}")
+    public Cliente retornarCliente(@PathVariable Integer id) {
+        return clienteService.encontrarCliente(id);
     }
 
     @DeleteMapping("/{clienteId}")

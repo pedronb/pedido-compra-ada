@@ -4,18 +4,12 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.br.CPF;
 
 import java.util.List;
 
-@Data
 @Entity
 @Table(name = "cliente")
-@NoArgsConstructor
-@AllArgsConstructor
 public class Cliente {
 
     @Id
@@ -44,4 +38,63 @@ public class Cliente {
     @OneToMany(mappedBy = "cliente")
     private List<Pedido> pedidos;
 
+    public Cliente() {
+    }
+
+    public Cliente(Integer id, String nome, String email, String cpf, String senha, List<Pedido> pedidos) {
+        this.id = id;
+        this.nome = nome;
+        this.email = email;
+        this.cpf = cpf;
+        this.senha = senha;
+        this.pedidos = pedidos;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public @NotEmpty(message = "Nome obrigatório") String getNome() {
+        return nome;
+    }
+
+    public void setNome(@NotEmpty(message = "Nome obrigatório") String nome) {
+        this.nome = nome;
+    }
+
+    public @NotEmpty(message = "Email obrigatório") String getEmail() {
+        return email;
+    }
+
+    public void setEmail(@NotEmpty(message = "Email obrigatório") String email) {
+        this.email = email;
+    }
+
+    public @NotEmpty(message = "cpf é obrigatório") @CPF(message = "informe um cpf válido") String getCpf() {
+        return cpf;
+    }
+
+    public void setCpf(@NotEmpty(message = "cpf é obrigatório") @CPF(message = "informe um cpf válido") String cpf) {
+        this.cpf = cpf;
+    }
+
+    public @NotBlank String getSenha() {
+        return senha;
+    }
+
+    public void setSenha(@NotBlank String senha) {
+        this.senha = senha;
+    }
+
+    public List<Pedido> getPedidos() {
+        return pedidos;
+    }
+
+    public void setPedidos(List<Pedido> pedidos) {
+        this.pedidos = pedidos;
+    }
 }

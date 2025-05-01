@@ -5,13 +5,7 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
 @Entity
 @Table(name = "produto")
 public class Produto {
@@ -34,4 +28,46 @@ public class Produto {
     @Min(0)
     private int estoque;
 
+    public Produto() {
+    }
+
+    public Produto(Integer id, String nome, Double preco, int estoque) {
+        this.id = id;
+        this.nome = nome;
+        this.preco = preco;
+        this.estoque = estoque;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public @NotEmpty(message = "Nome do produto obrigatório") String getNome() {
+        return nome;
+    }
+
+    public void setNome(@NotEmpty(message = "Nome do produto obrigatório") String nome) {
+        this.nome = nome;
+    }
+
+    public @NotNull(message = "preço obrigatório") @Positive Double getPreco() {
+        return preco;
+    }
+
+    public void setPreco(@NotNull(message = "preço obrigatório") @Positive Double preco) {
+        this.preco = preco;
+    }
+
+    @Min(0)
+    public int getEstoque() {
+        return estoque;
+    }
+
+    public void setEstoque(@Min(0) int estoque) {
+        this.estoque = estoque;
+    }
 }
