@@ -27,4 +27,6 @@ public class ItemPedido {
 
     @Column
     private Integer quantidade;
+
+    private Double precoUnitario;
 }
