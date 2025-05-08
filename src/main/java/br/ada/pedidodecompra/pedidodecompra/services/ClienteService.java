@@ -12,17 +12,23 @@ import java.util.Optional;
 public class ClienteService {
 
     private ClienteRepository clienteRepository;
-
-    public ClienteDTO cadastraCliente(Cliente cliente) {
-
-        if (clienteRepository.findById(cliente.getId()) != null) {
-            throw new RuntimeException("Cliente ja cadastrado com esse email");
-        }
-
-        Cliente clienteSalvo = clienteRepository.save(cliente);
-        return new ClienteDTO(clienteSalvo);
+    
+    public ClienteService(ClienteRepository clienteRepository) {
+        this.clienteRepository = clienteRepository;
     }
 
+    public Cliente cadastraCliente(Cliente cliente) {
+        
+        Optional<Cliente> clienteExistente = clienteRepository.findByEmail(cliente.getEmail());
+        
+        if (clienteExistente.isPresent()) {
+            throw new RuntimeException("Cliente já cadastrado.");
+        }
+        
+        return clienteRepository.save(cliente);
+        
+    }
+    
     public List<Cliente> listarClientes() {
         return clienteRepository.findAll();
     }
@@ -36,21 +42,21 @@ public class ClienteService {
         clienteRepository.deleteById(clienteId);
     }
 
-    public Cliente atualizar(Integer clienteId, ClienteDTO clienteDTO) {
+    public Cliente atualizar(Integer clienteId, ClienteDTO cliente) {
 
-        Optional<Cliente> c = clienteRepository.findById(clienteId);
-
-        if (c.isEmpty()) throw new RuntimeException("Cliente não encontrado.");
-
-        Cliente cliente = c.get();
-
-        cliente.setNome(clienteDTO.getNome());
-        cliente.setCpf(clienteDTO.getCpf());
-        cliente.setEmail(clienteDTO.getEmail());
-
-        Cliente clienteAtualizado = clienteRepository.save(cliente);
-
-        return clienteAtualizado;
-
+        Cliente clienteExiste = clienteRepository.findAll().stream()
+                .filter(c -> c.getId().equals(clienteId))
+                .findFirst()
+                .orElse(null);
+        
+        if (clienteExiste == null) throw new RuntimeException("Cliente não existe.");
+        
+        if (cliente.getNome() != null) clienteExiste.setNome(cliente.getNome());
+        if (cliente.getCpf() != null) clienteExiste.setCpf(cliente.getCpf());
+        if (cliente.getEmail() != null) clienteExiste.setEmail(cliente.getEmail());
+        
+        return clienteRepository.save(clienteExiste);
+        
     }
+    
 }

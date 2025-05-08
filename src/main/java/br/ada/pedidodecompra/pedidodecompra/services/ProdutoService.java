@@ -1,18 +1,28 @@
 package br.ada.pedidodecompra.pedidodecompra.services;
 
+import br.ada.pedidodecompra.pedidodecompra.dto.ProdutoDTO;
 import br.ada.pedidodecompra.pedidodecompra.entities.Produto;
 import br.ada.pedidodecompra.pedidodecompra.repositorys.ProdutoRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ProdutoService {
 
     private ProdutoRepository produtoRepository;
+    
+    public ProdutoService(ProdutoRepository produtoRepository) {
+        this.produtoRepository = produtoRepository;
+    }
 
     public Produto cadastrar(Produto produto) {
-
+        
+        Optional<Produto> produtoExiste = produtoRepository.findByNome(produto.getNome());
+        
+        if (produtoExiste.isPresent()) throw new RuntimeException("Produto já cadastrado.");
+        
         return produtoRepository.save(produto);
     }
 
@@ -25,14 +35,14 @@ public class ProdutoService {
                 .orElseThrow(() -> new RuntimeException("Produto não encontrado."));
     }
 
-    public Produto atualizar(Integer id, Produto produtoAntigo) {
-        Produto p = produtoRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Produto não encontrado"));
+    public Produto atualizar(Integer id, ProdutoDTO produtoAtualizado) {
+        Produto produtoExiste = produtoRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Produto não existe"));
 
-        p.setNome(produtoAntigo.getNome());
-        p.setPreco(produtoAntigo.getPreco());
-        p.setEstoque(produtoAntigo.getEstoque());
+        if(produtoAtualizado.getNome() != null) produtoExiste.setNome(produtoAtualizado.getNome());
+        if(produtoAtualizado.getPreco() != null) produtoExiste.setPreco(produtoAtualizado.getPreco());
+        if(produtoAtualizado.getEstoque() != 0) produtoExiste.setEstoque(produtoAtualizado.getEstoque());
 
-        return produtoRepository.save(p);
+        return produtoRepository.save(produtoExiste);
     }
 }

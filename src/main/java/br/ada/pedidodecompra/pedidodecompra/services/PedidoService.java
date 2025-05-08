@@ -18,6 +18,12 @@ public class PedidoService {
     private PedidoRepository pedidoRepository;
     private ProdutoRepository produtoRepository;
     private ClienteRepository clienteRepository;
+    
+    public PedidoService(PedidoRepository pedidoRepository, ProdutoRepository produtoRepository, ClienteRepository clienteRepository) {
+        this.pedidoRepository = pedidoRepository;
+        this.produtoRepository = produtoRepository;
+        this.clienteRepository = clienteRepository;
+    }
 
     public Pedido realizarPedido(Integer clienteId, List<ItemPedidoDTO> itens) {
 

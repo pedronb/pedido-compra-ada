@@ -5,7 +5,6 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import org.hibernate.validator.constraints.br.CPF;
-
 import java.util.List;
 
 @Entity
@@ -13,7 +12,7 @@ import java.util.List;
 public class Cliente {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "id")
     private Integer id;
 
@@ -25,13 +24,12 @@ public class Cliente {
     @NotEmpty(message = "Email obrigatório")
     private String email;
 
-    @Column(name = "cpf", length = 11)
+    @Column(name = "cpf")
     @NotEmpty(message = "cpf é obrigatório")
     @CPF(message = "informe um cpf válido")
     private String cpf;
 
     @NotBlank
-    @JsonIgnore
     private String senha;
 
     @JsonIgnore
@@ -96,5 +94,17 @@ public class Cliente {
 
     public void setPedidos(List<Pedido> pedidos) {
         this.pedidos = pedidos;
+    }
+    
+    @Override
+    public String toString() {
+        return "Cliente{" +
+                "id=" + id +
+                ", nome='" + nome + '\'' +
+                ", email='" + email + '\'' +
+                ", cpf='" + cpf + '\'' +
+                ", senha='" + senha + '\'' +
+                ", pedidos=" + pedidos +
+                '}';
     }
 }

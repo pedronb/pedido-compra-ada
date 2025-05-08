@@ -3,7 +3,6 @@ package br.ada.pedidodecompra.pedidodecompra.entities;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 
 @Entity
@@ -19,8 +18,7 @@ public class Produto {
     @NotEmpty(message = "Nome do produto obrigatório")
     private String nome;
 
-    @Column(name = "preco_produto")
-    @NotNull(message = "preço obrigatório")
+    @Column
     @Positive
     private Double preco;
 
@@ -54,11 +52,11 @@ public class Produto {
         this.nome = nome;
     }
 
-    public @NotNull(message = "preço obrigatório") @Positive Double getPreco() {
+    public  @Positive Double getPreco() {
         return preco;
     }
 
-    public void setPreco(@NotNull(message = "preço obrigatório") @Positive Double preco) {
+    public void setPreco( @Positive Double preco) {
         this.preco = preco;
     }
 
@@ -69,5 +67,14 @@ public class Produto {
 
     public void setEstoque(@Min(0) int estoque) {
         this.estoque = estoque;
+    }
+    
+    @Override
+    public String toString() {
+        return "Produto{" +
+                "nome='" + nome + '\'' +
+                ", preco=" + preco +
+                ", estoque=" + estoque +
+                '}';
     }
 }
