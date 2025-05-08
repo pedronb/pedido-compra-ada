@@ -3,6 +3,8 @@ package br.ada.pedidodecompra.pedidodecompra.services;
 import br.ada.pedidodecompra.pedidodecompra.dto.ClienteDTO;
 import br.ada.pedidodecompra.pedidodecompra.entities.Cliente;
 import br.ada.pedidodecompra.pedidodecompra.repositorys.ClienteRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,6 +14,9 @@ import java.util.Optional;
 public class ClienteService {
 
     private ClienteRepository clienteRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
     
     public ClienteService(ClienteRepository clienteRepository) {
         this.clienteRepository = clienteRepository;
@@ -24,6 +29,9 @@ public class ClienteService {
         if (clienteExistente.isPresent()) {
             throw new RuntimeException("Cliente já cadastrado.");
         }
+
+        String senhaCriptografada = passwordEncoder.encode(cliente.getSenha());
+        cliente.setSenha(senhaCriptografada);
         
         return clienteRepository.save(cliente);
         
